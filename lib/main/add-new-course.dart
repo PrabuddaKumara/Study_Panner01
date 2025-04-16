@@ -1,3 +1,4 @@
+import 'package:c01/models/add-course-model.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,16 @@ class AddNewCourse extends StatelessWidget {
   void _submitform(BuildContext context) async {
     if (_forkey.currentState?.validate() ?? false) {
       _forkey.currentState?.save();
+      try {
+        final CourseModel cour = CourseModel(
+          id: "",
+          name: _courseNameController.text,
+          description: _courseDescriptionController.text,
+          duration: _courseDurationController.text,
+          schedule: _coursesheduleController.text,
+          instructor: _courseinputController.text,
+        );
+      } catch (error) {}
     }
   }
 
@@ -38,14 +49,13 @@ class AddNewCourse extends StatelessWidget {
                 CustomInput(
                   controllered: _courseNameController,
                   textName: "Course Name",
-                  
+
                   validetor: (value) {
                     if (value?.isEmpty ?? true) {
                       return "Please Enter the couse name";
                     }
                     return null;
                   },
-                  
                 ),
                 CustomInput(
                   controllered: _courseDescriptionController,

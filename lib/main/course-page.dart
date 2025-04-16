@@ -7,7 +7,7 @@ class CoursePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CoursePage"),
+        title: Text("Course Page"),
       ),
     );
   }
