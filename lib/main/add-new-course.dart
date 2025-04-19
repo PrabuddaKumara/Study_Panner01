@@ -1,7 +1,10 @@
 import 'package:c01/models/add-course-model.dart';
+import 'package:c01/services/add-course-servise.dart';
+import 'package:c01/utils/snapshot_function.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddNewCourse extends StatelessWidget {
   final _forkey = GlobalKey<FormState>();
@@ -21,7 +24,7 @@ class AddNewCourse extends StatelessWidget {
     if (_forkey.currentState?.validate() ?? false) {
       _forkey.currentState?.save();
       try {
-        final CourseModel cour = CourseModel(
+        final CourseModel course = CourseModel(
           id: "",
           name: _courseNameController.text,
           description: _courseDescriptionController.text,
@@ -29,7 +32,24 @@ class AddNewCourse extends StatelessWidget {
           schedule: _coursesheduleController.text,
           instructor: _courseinputController.text,
         );
-      } catch (error) {}
+        await CourseServises().createNewCourse(course);
+
+        if (context.mounted) {
+          showSnackBar(
+            context: context,
+            text: "Courseed Added Succesfully!!!!",
+          );
+        }
+
+        GoRouter.of(context).go("/");
+      } catch (error) {
+        if (context.mounted) {
+          showSnackBar(context: context, text: "Courseed Added Faild!!!!");
+        }
+        GoRouter.of(context).go("/");
+
+        print("Error services $error");
+      }
     }
   }
 
@@ -40,16 +60,17 @@ class AddNewCourse extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text("Add New Course")),
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        padding: EdgeInsets.symmetric(horizontal: 15),
         child: Form(
           key: _forkey,
           child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomInput(
                   controllered: _courseNameController,
                   textName: "Course Name",
-
+            
                   validetor: (value) {
                     if (value?.isEmpty ?? true) {
                       return "Please Enter the couse name";
@@ -87,7 +108,7 @@ class AddNewCourse extends StatelessWidget {
                   },
                   textName: "Course Shedule",
                 ),
-
+            
                 CustomInput(
                   controllered: _coursesderationController,
                   validetor: (value) {
@@ -108,9 +129,13 @@ class AddNewCourse extends StatelessWidget {
                   },
                   textName: "Course Input",
                 ),
-                ButtonWidget(
-                  textName: "Add course",
-                  onpresed: () => _submitform(context),
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  
+                  child: ButtonWidget(
+                    textName: "Add course",
+                    onpresed: () => _submitform(context),
+                  ),
                 ),
               ],
             ),

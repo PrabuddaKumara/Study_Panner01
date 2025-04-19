@@ -12,6 +12,7 @@ class HomePage extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(10.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -25,6 +26,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ],
               ),
+              Text("Course"),
             ],
           ),
         ),
