@@ -1,6 +1,7 @@
 import 'package:c01/models/add-course-model.dart';
 import 'package:c01/utils/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SingleCourse extends StatelessWidget {
   final CourseModel course;
@@ -65,7 +66,9 @@ class SingleCourse extends StatelessWidget {
                       color: greenPrimarycolor,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push("/add-new-assiment",extra: course);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -100,7 +103,9 @@ class SingleCourse extends StatelessWidget {
                       color: greenPrimarycolor,
                     ),
                     child: TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        GoRouter.of(context).push("/add-new-note",extra: course);
+                      },
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,
