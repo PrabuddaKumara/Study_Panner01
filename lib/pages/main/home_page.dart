@@ -29,7 +29,6 @@ class HomePage extends StatelessWidget {
                 ],
               ),
               SizedBox(height: 20),
-
               Text(
                 'Courses',
                 style: TextStyle(
@@ -89,7 +88,9 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                             onTap: () {
-                              GoRouter.of(context).push("/single-course",extra: course);
+                              GoRouter.of(
+                                context,
+                              ).push("/single-course", extra: course);
                             },
                           ),
                         );
