@@ -43,7 +43,7 @@ class _AddNewNotesState extends State<AddNewNotes> {
   }
 
   void _submitform(BuildContext context) async {
-    if (_formkey.currentState!.validate() ?? false) {}
+    if (_formkey.currentState?.validate() ?? false) {}
   }
 
   @override
