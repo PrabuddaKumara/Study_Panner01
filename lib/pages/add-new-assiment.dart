@@ -1,6 +1,7 @@
 import 'package:c01/models/add-course-model.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
+import 'package:c01/widgets/services/font-style-services.dart';
 import 'package:flutter/material.dart';
 
 class AddNewAssiment extends StatelessWidget {
@@ -65,7 +66,7 @@ class AddNewAssiment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Add New Assiment"),
+                Text("Add New Assiment",style: AppWidgets.HeadLineStyle(),),
                 SizedBox(height: 20),
                 Text(
                   "The overall goal of this workshop is to bring researchers, academicians,  that make the best of the limited data in the medical domain",
