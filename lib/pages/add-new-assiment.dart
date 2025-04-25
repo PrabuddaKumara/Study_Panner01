@@ -1,4 +1,5 @@
 import 'package:c01/models/add-course-model.dart';
+import 'package:c01/models/assiment_model.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:c01/widgets/services/font-style-services.dart';
@@ -50,7 +51,24 @@ class AddNewAssiment extends StatelessWidget {
   }
 
   void _submitform(BuildContext context) async {
-    if (_formkey.currentState!.validate() ?? false) {}
+    if (_formkey.currentState?.validate() ?? false) {
+      try {
+        //create new assiment
+
+        final AssimentModel assiment = AssimentModel(
+          id: "",
+          name: _assimentNameController.text,
+          description: _assimentDescriptionController.text,
+          duration: _assimentDuractionController.text,
+          dueDate: _selectDate.value,
+          dueTime: _selectTime.value,
+
+          
+        );
+      } catch (error) {
+        print("error");
+      }
+    }
   }
 
   @override
@@ -66,7 +84,7 @@ class AddNewAssiment extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("Add New Assiment",style: AppWidgets.HeadLineStyle(),),
+                Text("Add New Assiment", style: AppWidgets.HeadLineStyle()),
                 SizedBox(height: 20),
                 Text(
                   "The overall goal of this workshop is to bring researchers, academicians,  that make the best of the limited data in the medical domain",
