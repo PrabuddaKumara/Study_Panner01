@@ -1,10 +1,12 @@
 import 'package:c01/models/add-course-model.dart';
 import 'package:c01/models/assiment_model.dart';
 import 'package:c01/services/assiment_services.dart';
+import 'package:c01/utils/snapshot_function.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:c01/widgets/services/font-style-services.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class AddNewAssiment extends StatelessWidget {
   final CourseModel course;
@@ -63,13 +65,18 @@ class AddNewAssiment extends StatelessWidget {
           duration: _assimentDuractionController.text,
           dueDate: _selectDate.value,
           dueTime: _selectTime.value,
-
-         
         );
         //add assiment databse
-         AssimentServices().createAssiment(course.id, assiment);
+        AssimentServices().createAssiment(course.id, assiment);
+        showSnackBar(
+          context: context,
+          text: "Succsesfully Data Base Data added!!!!",
+        );
+        await Future.delayed(Duration(seconds: 2));
+        GoRouter.of(context).go("/");
       } catch (error) {
         print("error");
+        showSnackBar(context: context, text: " Data Base Data Failed!!!!");
       }
     }
   }
