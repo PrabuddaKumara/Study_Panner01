@@ -1,5 +1,6 @@
 import 'package:c01/models/add-course-model.dart';
 import 'package:c01/models/assiment_model.dart';
+import 'package:c01/services/assiment_services.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:c01/widgets/services/font-style-services.dart';
@@ -63,8 +64,10 @@ class AddNewAssiment extends StatelessWidget {
           dueDate: _selectDate.value,
           dueTime: _selectTime.value,
 
-          
+         
         );
+        //add assiment databse
+         AssimentServices().createAssiment(course.id, assiment);
       } catch (error) {
         print("error");
       }
