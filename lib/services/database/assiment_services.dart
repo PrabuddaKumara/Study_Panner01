@@ -68,6 +68,7 @@ class AssimentServices {
       return assimentMap;
     } catch (errror) {
       print("Error");
+      return{};
     }
   }
 }
