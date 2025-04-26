@@ -1,5 +1,5 @@
 import 'package:c01/models/add-course-model.dart';
-import 'package:c01/services/add-course-servise.dart';
+import 'package:c01/services/database/add-course-servise.dart';
 import 'package:c01/utils/snapshot_function.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';

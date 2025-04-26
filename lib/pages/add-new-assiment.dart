@@ -1,6 +1,6 @@
 import 'package:c01/models/add-course-model.dart';
 import 'package:c01/models/assiment_model.dart';
-import 'package:c01/services/assiment_services.dart';
+import 'package:c01/services/database/assiment_services.dart';
 import 'package:c01/utils/snapshot_function.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
