@@ -25,4 +25,47 @@ class AssimentServices {
       print(error);
     }
   }
+
+  //all the assiment inside the course
+  Stream<List<AssimentModel>> getassiment(String courseId) {
+    try {
+      //assimrnt collection references
+      final CollectionReference assimentCollection = courseCollection
+          .doc(courseId)
+          .collection("assiment");
+      return assimentCollection.snapshots().map((snapshot) {
+        return snapshot.docs
+            .map(
+              (doc) =>
+                  AssimentModel.fromJson(doc.data() as Map<String, dynamic>),
+            )
+            .toList();
+      });
+    } catch (error) {
+      print("error assimne");
+      return Stream.empty();
+    }
+  }
+
+  //get all assimnet with the course name
+  Future<Map<String, List<AssimentModel>>> getAssimentCourseName() async {
+    try {
+      final QuerySnapshot snapshot = await courseCollection.get();
+      final Map<String, List<AssimentModel>> assimentMap = {};
+
+      for (final doc in snapshot.docs) {
+        //current course id
+        final String courseId = doc.id;
+
+        //all the assiments inside the course
+
+         final List<AssimentModel>assiments=await getassiment(courseId).first;
+
+
+         
+      }
+    } catch (errror) {
+      print("Error");
+    }
+  }
 }

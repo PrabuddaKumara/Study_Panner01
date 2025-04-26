@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:c01/models/add-course-model.dart';
+import 'package:c01/models/nore_model.dart';
+import 'package:c01/services/note_services.dart';
 import 'package:c01/widgets/button_widget.dart';
 import 'package:c01/widgets/custom-input.dart';
 import 'package:c01/widgets/services/font-style-services.dart';
@@ -10,7 +12,7 @@ import 'package:image_picker/image_picker.dart';
 class AddNewNotes extends StatefulWidget {
   final CourseModel course;
 
-  AddNewNotes({super.key, required this.course});
+  const AddNewNotes({super.key, required this.course});
 
   @override
   State<AddNewNotes> createState() => _AddNewNotesState();
@@ -19,13 +21,13 @@ class AddNewNotes extends StatefulWidget {
 class _AddNewNotesState extends State<AddNewNotes> {
   final _formkey = GlobalKey<FormState>();
 
-  TextEditingController _nameTitleController = TextEditingController();
+  final TextEditingController _nameTitleController = TextEditingController();
 
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
 
-  TextEditingController _sectionNameController = TextEditingController();
+  final TextEditingController _sectionNameController = TextEditingController();
 
-  TextEditingController _referencesBookController = TextEditingController();
+  final TextEditingController _referencesBookController = TextEditingController();
 
   final ImagePicker _imagepicker = ImagePicker();
 
@@ -43,7 +45,43 @@ class _AddNewNotesState extends State<AddNewNotes> {
   }
 
   void _submitform(BuildContext context) async {
-    if (_formkey.currentState?.validate() ?? false) {}
+    if (_formkey.currentState?.validate() ?? false) {
+      try {
+        noteModel note = noteModel(
+          id: '',
+          title: _nameTitleController.text,
+          description: _descriptionController.text,
+          section: _sectionNameController.text,
+          references: _referencesBookController.text,
+          imageData: _selectImage != null ? File(_selectImage!.path) : null,
+        );
+
+        // Create the note
+        await NoteServices().createNote(
+          widget.course.id,
+          note,
+        );
+
+        // Show success SnackBar
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Note added successfully!'),
+            duration: Duration(
+              seconds: 1,
+            ),
+          ),
+        );
+      } catch (error) {
+        // Consider showing an error SnackBar here
+        print("Error adding note: $error");
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Failed to add note. Please try again.'),
+            duration: Duration(seconds: 2),
+          ),
+        );
+      }
+    }
   }
 
   @override
@@ -64,7 +102,6 @@ class _AddNewNotesState extends State<AddNewNotes> {
                   "Developing principled methods to identify diverse and downstream tasks, ut compromising performance.",
                 ),
                 SizedBox(height: 20),
-
                 CustomInput(
                   controllered: _nameTitleController,
                   textName: "Name Title",
@@ -118,21 +155,20 @@ class _AddNewNotesState extends State<AddNewNotes> {
                 SizedBox(height: 10),
                 _selectImage != null
                     ? Column(
-                      children: [
-                        Text("Selected Image"),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.file(
-                            File(_selectImage!.path),
-                            height: 200,
-                            width: double.infinity,
-                            fit: BoxFit.cover,
+                        children: [
+                          Text("Selected Image"),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.file(
+                              File(_selectImage!.path),
+                              height: 200,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                            ),
                           ),
-                        ),
-                      ],
-                    )
+                        ],
+                      )
                     : Text("No Image Selecteded"),
-
                 SizedBox(height: 10),
                 ButtonWidget(
                   textName: "Submit Note",
