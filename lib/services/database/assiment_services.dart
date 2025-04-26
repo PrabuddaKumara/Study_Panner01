@@ -59,11 +59,13 @@ class AssimentServices {
 
         //all the assiments inside the course
 
-         final List<AssimentModel>assiments=await getassiment(courseId).first;
+        final List<AssimentModel> assiments = await getassiment(courseId).first;
 
+        //create a new key value pair with the course name and the list assiment
 
-         
+        assimentMap[doc['name']] = assiments;
       }
+      return assimentMap;
     } catch (errror) {
       print("Error");
     }
